@@ -1,7 +1,6 @@
 from bs4 import BeautifulSoup
-from sqlalchemy import create_engine, Table, MetaData, Column
 import requests
-from datetime import date, timedelta, time, datetime
+from datetime import date
 import pandas as pd
 import re
 
