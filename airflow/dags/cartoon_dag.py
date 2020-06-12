@@ -1,4 +1,4 @@
-from datetime import timedelta
+from datetime import timedelta, datetime
 from airflow import DAG
 from dilbert import Dilbert
 from main import update_dilbert
@@ -10,7 +10,7 @@ from airflow.operators.python_operator import PythonOperator
 default_args = {
     'owner': 'airflow',
     'depends_on_past': False,
-    'start_date': '2020-01-01',
+    'start_date': datetime(2020, 1, 1),
     'email_on_failure': False,
     'email_on_retry': False,
     'retries': 1,
@@ -24,19 +24,19 @@ dag = DAG(
     # run daily at noon
 )
 
-fp = '/Users/Andrew/Documents/data_engineering/database/comics.db'
+filepath = '/Users/Andrew/Documents/data_engineering/database/comics.db'
 
 
 dummy = DummyOperator(
     task_id='Dummy',
     default_args=default_args
 )
+execution_date = '{{ ds }}'
 
 dilbert_dag = PythonOperator(
     task_id='Dilbert',
-    provide_context=True,
     python_callable=update_dilbert,
-    op_args=[date.today(), fp],
+    op_args=[execution_date, filepath],
     dag=dag
 )
 

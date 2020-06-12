@@ -41,11 +41,13 @@ class Dilbert():
             return 'no transcript found'
 
     def scrape(self):
+        # scrape the dilbert with the provided date
         base_url = f"https://dilbert.com/strip/{self.date}"
         try:
             response = requests.get(base_url)
             soup = BeautifulSoup(response.content, 'html.parser')
             comic_features = self.grab_comic_image(soup)
+            # return a dict with the src, alt tags and transcript 
             return {
                 'date': self.date,
                 'comic_src': comic_features['src'],
@@ -57,21 +59,25 @@ class Dilbert():
             print(e)
 
     def clean_alt_text(self, string):
+        # strip out latter half of the alt text
         try:
             return str(string).split(' - ')[0]
         except:
             return string
 
     def clean_transcript(self, blob):
+        # remove all new line and carriage returns
         return re.sub('[\r\n]', ' ', blob)
 
     def clean_tags(self, list):
+        # joined list back together
         if list != 'empty':
             return ', '.join(list)
         else:
             return list
 
     def clean(self, dict):
+        # bring all cleaning funcs together
         return {
             'date': str(dict['date']),
             'src': dict['comic_src'],
@@ -81,5 +87,6 @@ class Dilbert():
         }
 
     def load(self, dict):
+        # return data as a dataframe
         return pd.DataFrame(
             dict, columns=['date', 'src', 'alt', 'tags', 'transcript'], index=[0])

@@ -7,6 +7,14 @@ fp = '/Users/Andrew/Documents/data_engineering/database/comics.db'
 
 
 def update_dilbert(date, db_filepath):
+    '''
+    Initiates the scrapping of the Dilbert website, then 
+    cleans the collected data and transforms it into a dataframe. 
+    This dataframe is then added to the dilbert table in the comics database.
+
+    :param date: date of the comic, used as the query param.
+    :param db_filepath: Filepath to database
+    '''
 
     d = Dilbert(date)
     scrapped = d.scrape()
