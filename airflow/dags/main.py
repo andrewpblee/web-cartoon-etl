@@ -1,7 +1,6 @@
 from dilbert import Dilbert
 from sqlalchemy import create_engine
 from sqlalchemy_utils import database_exists, create_database
-from datetime import date
 
 fp = '/Users/Andrew/Documents/data_engineering/database/comics.db'
 

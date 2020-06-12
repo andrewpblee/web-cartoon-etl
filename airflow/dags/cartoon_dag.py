@@ -2,7 +2,6 @@ from datetime import timedelta, datetime
 from airflow import DAG
 from dilbert import Dilbert
 from main import update_dilbert
-from datetime import date
 from airflow.operators.dummy_operator import DummyOperator
 from airflow.operators.python_operator import PythonOperator
 
